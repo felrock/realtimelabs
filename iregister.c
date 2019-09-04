@@ -2,7 +2,7 @@
 //  Updated by Masoumeh Taromirad on 11/08/16.
 //  Updated by Wagner Morais and Johannes van Esch on 28/08/18.
 //  Copyright (c) 2014 by Mohammadreza Mousavi [mohmou]. All rights reserved.
- 
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "iregister.h"
@@ -26,39 +26,28 @@ void setAll(iRegister *r){
 }
 
 int getBit(int i, iRegister *r){
-  return r->content & (1 << i);
+  if ((r->content & (1 << i)) > 0){
+    return 1;
+  }
+  return 0;
 }
 
 void assignNibble(int pos, int value, iRegister *r){
-  int nib_mask;
-  if (pos == 1){
-    nib_mask = -1 << 4;
-  }
-  else if (pos == 2){
-    nib_mask = -1 << 8;
-    nib_mask += 15;
-  }
+  int nib_mask = ~(15 << (pos-1)*4);
+
   r->content &= nib_mask;
-  r->content ^= value;
+  r->content ^= (value << (pos-1)*4);
 }
 
 int getNibble(int pos, iRegister *r){
-  int nib_mask;
-  if (pos == 1){
-    nib_mask = 15;
-  }
-  else if (pos == 2){
-    nib_mask = 255;
-    nib_mask ^= 15;
-  }
-  return r->content & nib_mask;
+  int nib_mask = (15 << (pos-1)*4);
+  return (r->content & nib_mask) >> (pos-1)*4;
 }
 
 char *reg2str(iRegister r){
   char *ar = malloc(33*sizeof(char));
-  int mask = (1 << 31);
-  for(int i=0; i < 32; i++){
-    
+  int mask = (1 << 30);
+  for(int i=0; i < 31; i++){
     if(mask & r.content){
       ar[i] = '1';
     }
@@ -78,4 +67,3 @@ void shiftRight(int n, iRegister *r){
 void shiftLeft(int n, iRegister *r){
   r->content <<= n;
 }
-
