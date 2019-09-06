@@ -158,6 +158,63 @@ int main ()
   assert(strcmp(actual, out) == 0);
   printf("reg2Str test 2 passed!\n");
 
+  rTest.content = 201457696;
+  actual = "0001100000000100000000000100000";
+  out = reg2str(rTest);
+  assert(strcmp(actual, out) == 0);
+  printf("reg2Str test 3 passed!\n");
+
+  rTest.content = 63;
+  actual = "0000000000000000000000000111111";
+  out = reg2str(rTest);
+  assert(strcmp(actual, out) == 0);
+  printf("reg2Str test 4 passed!\n");
+
+  printf("=============================\n");
+
+  /* test shiftRight */
+  rTest.content = 2;
+  shiftRight(1, &rTest);
+  assert(rTest.content == 1);
+  printf("shiftRight test 1 passed!\n");
+
+  rTest.content = 1;
+  shiftRight(1, &rTest);
+  assert(rTest.content == 0);
+  printf("shiftRight test 2 passed!\n");
+
+  rTest.content = 128;
+  shiftRight(3, &rTest);
+  assert(rTest.content == 16);
+  printf("shiftRight test 3 passed!\n");
+
+  rTest.content = 1073741824;
+  shiftRight(30, &rTest);
+  assert(rTest.content == 1);
+  printf("shiftRight test 4 passed!\n");
+
+  printf("=============================\n");
+
+  /* test shiftLeft */
+  rTest.content = 1;
+  shiftLeft(1, &rTest);
+  assert(rTest.content == 2);
+  printf("shiftLeft test 1 passed!\n");
+
+  rTest.content = 32;
+  shiftLeft(5, &rTest);
+  assert(rTest.content == 1024);
+  printf("shiftLeft test 2 passed!\n");
+
+  rTest.content = 4;
+  shiftLeft(3, &rTest);
+  assert(rTest.content == 32);
+  printf("shiftLeft test 3 passed!\n");
+
+  rTest.content = 0;
+  shiftLeft(1, &rTest);
+  assert(rTest.content == 0);
+  printf("shiftLeft test 4 passed!\n");
 
   return 0;
 }
