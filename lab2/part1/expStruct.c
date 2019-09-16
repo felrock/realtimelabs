@@ -13,10 +13,9 @@ ExpStruct * iexp (int n){
 		temp = temp*n/i;
 		ans = ans + temp;
 	}
-
 	float dec = ans - (int)ans;
 	exp.expInt = (int)ans;
-	exp.expFraction = (int)(dec*100+0.5);//100 gives 2 decimal precision
+	exp.expFraction = (int)((dec+0.005)*100);//2 decimal precision incl. rounding
 	ExpStruct *reExp = &exp;
 	return reExp;
 }
