@@ -5,7 +5,10 @@
 
 // T(x) = 1 + x + x^2/2! + x^3/3! ... + x^n/n!
 ExpStruct * iexp (int n){
-	ExpStruct exp;
+	ExpStruct *exp = (ExpStruct *)malloc(sizeof(ExpStruct));
+	if (exp == NULL){
+		return NULL;
+	}
 	float ans = 1;
 	float temp = 1;
 
@@ -14,8 +17,7 @@ ExpStruct * iexp (int n){
 		ans = ans + temp;
 	}
 	float dec = ans - (int)ans;
-	exp.expInt = (int)ans;
-	exp.expFraction = (int)((dec+0.005)*100);//2 decimal precision incl. rounding
-	ExpStruct *reExp = &exp;
-	return reExp;
+	exp->expInt = (int)ans;
+	exp->expFraction = (int)((dec+0.005)*100);//2 decimal precision incl. rounding
+	return exp;
 }
