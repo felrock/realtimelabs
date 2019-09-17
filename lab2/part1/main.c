@@ -5,16 +5,18 @@
 
 
 static ExpStruct * expF;
-/* The suite initialization function.
- *
+/*
+ * The suite initialization function.
  */
 int init_SuiteIexp(){
-	expF = (ExpStruct *)malloc(sizeof(ExpStruct));
+	if ((expF = (ExpStruct *)malloc(sizeof(ExpStruct))) == NULL){
+		return -1;
+	}
 	return 0;
 }
 
-/* The suite cleanup function.
- *
+/*
+ * The suite cleanup function.
  */
 int clean_SuiteIexp(){
 	free(expF);
@@ -22,10 +24,28 @@ int clean_SuiteIexp(){
 }
 
 
-void testSuiteIexp(void){//FIX TEST CASES
-  CU_ASSERT(0 == 0);
-  CU_ASSERT(2 == 2);
-  CU_ASSERT(7 == 7);
+void testSuiteIexp(void){
+	/*
+	* Test positive
+	*/
+	expF = iexp(5);
+  CU_ASSERT(91 == expF->expInt);
+	CU_ASSERT(42 == expF->expFraction);
+
+	/*
+	* Test negative number, (n+1) terms gives negative amount. accordingly to
+	* lab specification.
+	*/
+	expF = iexp(-5);
+	CU_ASSERT(1 == expF->expInt);
+	CU_ASSERT(0 == expF->expFraction);
+
+	/*
+	* Test large number, gives negative number because of signed integer type.
+	*/
+	expF = iexp(25);
+	CU_ASSERT(0 > expF->expInt);
+
 }
 
 
@@ -57,12 +77,13 @@ int runAllTests(){
 }
 
 int main(){
+	return runAllTests();
 	/*
-	ExpStruct * v = iexp(4);
+	ExpStruct * v = iexp(-4);
 	printf("expInt: %d\n", v->expInt);
 	printf("expFraction: %d\n", v->expFraction);
+	return 0;
 	*/
-	return runAllTests();
 }
 
 
