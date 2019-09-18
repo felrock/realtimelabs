@@ -34,7 +34,7 @@ void testSuiteIexp(void){
   CU_ASSERT(12842 == expF->expInt);
 	CU_ASSERT(31 == expF->expFraction);
 	/*
-	* 2. Test edge of pre-condition (inside/just outside)
+	* 2. Test edge of pre-condition
 	*/
 	expF = iexp(22);
   CU_ASSERT(1994556672 == expF->expInt);
