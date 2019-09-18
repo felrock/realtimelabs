@@ -2,7 +2,9 @@
 #include <stdio.h>
 #include "expStruct.h"
 #include "CUnit/Basic.h"
-
+/*
+* Compilation: gcc -o test main.c expStruct.c -lcunit
+*/
 
 static ExpStruct * expF;
 /*
@@ -26,24 +28,29 @@ int clean_SuiteIexp(){
 
 void testSuiteIexp(void){
 	/*
-	* Test positive
+	* 1. Test middle of pre-condition
 	*/
-	expF = iexp(5);
-  CU_ASSERT(91 == expF->expInt);
-	CU_ASSERT(42 == expF->expFraction);
-
+	expF = iexp(10);
+  CU_ASSERT(12842 == expF->expInt);
+	CU_ASSERT(31 == expF->expFraction);
 	/*
-	* Test negative number, (n+1) terms gives negative amount. accordingly to
-	* lab specification.
+	* 2. Test edge of pre-condition (inside/just outside)
 	*/
-	expF = iexp(-5);
+	expF = iexp(22);
+  CU_ASSERT(1994556672 == expF->expInt);
+	CU_ASSERT(0 == expF->expFraction);
+	expF = iexp(0);
+  CU_ASSERT(1 == expF->expInt);
+	CU_ASSERT(0 == expF->expFraction);
+	/*
+	* 3. Test outside pre-conditions
+	* negative numbers give e^0 because of there cannot exist negative terms.
+	* large positive gives negative because of integer overflow.
+	*/
+	expF = iexp(-1);
 	CU_ASSERT(1 == expF->expInt);
 	CU_ASSERT(0 == expF->expFraction);
-
-	/*
-	* Test large number, gives negative number because of signed integer type.
-	*/
-	expF = iexp(25);
+	expF = iexp(23);
 	CU_ASSERT(0 > expF->expInt);
 
 }
@@ -78,13 +85,4 @@ int runAllTests(){
 
 int main(){
 	return runAllTests();
-	/*
-	ExpStruct * v = iexp(-4);
-	printf("expInt: %d\n", v->expInt);
-	printf("expFraction: %d\n", v->expFraction);
-	return 0;
-	*/
 }
-
-
-// gcc -Wall -o test main.c expStruct.c -lcunit
