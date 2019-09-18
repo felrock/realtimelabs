@@ -3,3 +3,5 @@
 *.elf
 *.out
 test
+*.o
+.DS_Store
