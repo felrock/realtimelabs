@@ -31,27 +31,6 @@ void wait(long ms)
     }
 }
 
-char * convertIntToChar(int n){
-  int count = 1;
-  int temp = n;
-  int pos;
-  char * numbers;
-  /*Count length of integer n*/
-  while((temp = temp/10) > 0){
-    count++;
-  }
-  numbers = (char*)malloc((count+1)*sizeof(char));
-  temp = n;
-  pos = count-1;
-  numbers[count] = '\0';
-  while(pos >= 0){
-    numbers[pos] = (char)(temp%10 + 0x30);
-    pos--;
-    temp = temp/10;
-  }
-  return numbers;
-}
-
 int main()
 {
   /* Enable GPIO16 as an output */
