@@ -8,7 +8,6 @@
 #include <stdlib.h>
 #include <rpi3.h>
 #include "expStruct.h"
-#include <string.h>
 
 void wait(long ms)
 {
