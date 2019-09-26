@@ -1,6 +1,6 @@
 # Makefile for Raspberry Pi 3
 
-OBJS	= lib/startup.o lib/syscalls.o lab2.o expStruct.o
+OBJS	= lib/startup.o lib/syscalls.o lab2.o piface.o expStruct.o
 ELF	    = kernel.elf
 MAIN	= kernel.img
 

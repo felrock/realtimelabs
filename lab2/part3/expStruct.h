@@ -37,4 +37,4 @@ struct expStruct {
  *	2. at the edges.
  *	3. outside the pre-conditions.
  */
-ExpStruct * iexp (int n);
+ExpStruct * iexp (int n, int *count);
