@@ -1,9 +1,11 @@
 //  Created by Mohammadreza Mousavi [mohmou] on 9/5/14.
 //  Updated by Masoumeh Taromirad on 11/08/16.
 //  Updated by Wagner Morais and Johannes van Esch on 28/08/18.
+//  Updated by Felix Stenbäck Son of Per and Jonatan von Jönsson the third
+//  of his name.
 //  Copyright (c) 2014 by Mohammadreza Mousavi [mohmou]. All rights reserved.
 
-#include <stdlib.h>
+#include <assert.h>
 #include <stdio.h>
 #include "iregister.h"
 
@@ -16,9 +18,8 @@ void resetAll(iRegister *r){
 }
 
 void setBit(int i, iRegister *r){
-  if( i >= 0 && i < 32){
-    r->content |= (1 << i);
-  }
+  assert(i >= 0 && i < 32);
+  r->content |= (1 << i);
 }
 
 void setAll(iRegister *r){
@@ -26,6 +27,7 @@ void setAll(iRegister *r){
 }
 
 int getBit(int i, iRegister *r){
+  assert(i >= 0 && i < 32);
   if ((r->content & (1 << i)) > 0){
     return 1;
   }
@@ -33,13 +35,14 @@ int getBit(int i, iRegister *r){
 }
 
 void assignNibble(int pos, int value, iRegister *r){
+  assert(pos >= 1 && pos <= 8);
   int nib_mask = ~(15 << (pos-1)*4);
-
   r->content &= nib_mask;
   r->content ^= (value << (pos-1)*4);
 }
 
 int getNibble(int pos, iRegister *r){
+  assert(pos >= 1 && pos <= 8);
   int nib_mask = (15 << (pos-1)*4);
   return (r->content & nib_mask) >> (pos-1)*4;
 }
@@ -61,9 +64,11 @@ char *reg2str(iRegister r){
 }
 
 void shiftRight(int n, iRegister *r){
+  assert(n >= 0 && n < 32);
   r->content >>= n;
 }
 
 void shiftLeft(int n, iRegister *r){
+  assert(n >= 0 && n < 32);
   r->content <<= n;
 }

@@ -9,6 +9,27 @@
 #include <string.h>
 #include "iregister.h"
 
+/*
+ *
+ * 
+
+part1:
+
+Functions are implemented without wrong input detection. How did you make your test cases?
+
+# we added asserts to check for invalid inputs
+
+When you shift, you don’t make sure that the input bits are zeros.
+
+# we added assert in shift
+
+You have to submit this assignment again. your deadline is the same as the deadline of the second one.
+
+ *
+ * */
+
+
+
 int main ()
 {
   iRegister r;
@@ -55,8 +76,8 @@ int main ()
   printf("setBit test 3 passed!\n");
 
   rTest.content = 0;
-  setBit(128, &rTest);
-  assert(rTest.content == 0);
+  setBit(1, &rTest);
+  assert(rTest.content == 2);
   printf("setBit test 4 passed!\n");
 
   printf("=============================\n");
