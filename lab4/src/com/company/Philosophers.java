@@ -8,11 +8,12 @@ public class Philosophers {
         Philosopher[] phils = new Philosopher[NUM_PHIL];
         // Create forks
         for(int i=0; i<NUM_PHIL; i++) forks[i]=new Fork();
+        //Create Philosophers
         for(int i=0; i<NUM_PHIL; i++) phils[i]=new Philosopher(i, forks[i], forks[(i+1) % NUM_PHIL]);
         // Start all Philosopher threads
         for(int i=0; i<NUM_PHIL; i++) phils[i].start();
         // Idle here
-        Thread.sleep(10000);
+        Thread.sleep(20000);
         // Request termination
         for(int i=0; i<NUM_PHIL; i++) phils[i].terminate();
         // Wait for all to finish
@@ -20,7 +21,7 @@ public class Philosophers {
         // Print stats
         System.out.println("Philosopher\t Eaten");
         for(int i=0; i<NUM_PHIL; i++){
-            System.out.println(i + "\t\t\t\t" + phils[i].getEaten());
+            System.out.println(i + "\t\t" + phils[i].getEaten());
         }
     }
 
@@ -100,7 +101,7 @@ public class Philosophers {
 }
 
 class Fork {
-    Thread philosopher = null;
+    private Thread philosopher = null;
 
     public synchronized void grab() throws InterruptedException {
         while (philosopher != null)

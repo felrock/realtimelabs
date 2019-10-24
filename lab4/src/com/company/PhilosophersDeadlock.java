@@ -17,6 +17,7 @@ public class PhilosophersDeadlock {
         // Request termination
         for(int i=0; i<NUM_PHIL; i++) phils[i].terminate();
         // Wait for all to finish
+        for(int i=0; i<NUM_PHIL; i++) phils[i].join();
         // Print stats
     }
 
@@ -37,7 +38,7 @@ public class PhilosophersDeadlock {
             System.out.println("Philosopher "+id+" is eating.");
             // delay
             try {
-                Thread.sleep(DELAY_MS);
+                Thread.sleep(1500);
             }
             catch (InterruptedException e) {
                 e.printStackTrace();
