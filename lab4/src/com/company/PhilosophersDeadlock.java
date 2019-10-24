@@ -1,54 +1,40 @@
 package com.company;
 
-public class Philosophers {
-    private static int NUM_PHIL = 8;
+public class PhilosophersDeadlock {
+    private static int NUM_PHIL = 5;
     private static int DELAY_MS = 500;
-    private static Fork[] forks = new Fork[NUM_PHIL];
+    private static Object[] forks = new Object[NUM_PHIL];
 
     public static void main(String[] args) throws InterruptedException {
         Philosopher[] phils = new Philosopher[NUM_PHIL];
+        System.out.println("Philosophers deadlock program..");
         // Create forks
-        for(int i=0; i<NUM_PHIL; i++) forks[i]=new Fork();
+        for(int i=0; i<NUM_PHIL; i++) forks[i]=new Object();
         for(int i=0; i<NUM_PHIL; i++) phils[i]=new Philosopher(i, forks[i], forks[(i+1) % NUM_PHIL]);
         // Start all Philosopher threads
         for(int i=0; i<NUM_PHIL; i++) phils[i].start();
-        // Idle here
-        Thread.sleep(10000);
+        Thread.sleep(10000); // Idle here
         // Request termination
         for(int i=0; i<NUM_PHIL; i++) phils[i].terminate();
         // Wait for all to finish
-        for(int i=0; i<NUM_PHIL; i++) phils[i].join();
         // Print stats
-        System.out.println("Philosopher\t Eaten");
-        for(int i=0; i<NUM_PHIL; i++){
-            System.out.println(i + "\t\t\t\t" + phils[i].getEaten());
-        }
     }
 
     static class Philosopher extends Thread {
-        private final Fork leftFork, rightFork;
+        private final Object leftFork, rightFork;
         private final int id;
-        private int eaten = 0;
-        private boolean RUNNING = true;
+        private boolean RUNNING;
 
-        public Philosopher(int id, Fork leftFork, Fork rightFork) {
+        public Philosopher(int id, Object leftFork, Object rightFork) {
             // Constructor
             this.id = id;
+            this. RUNNING = true;
             this.leftFork = leftFork;
             this.rightFork = rightFork;
         }
 
-        private int getEaten() {
-            return eaten;
-        }
-
-        private void terminate() {
-            RUNNING = false;
-        }
-
         private void eat() {
             System.out.println("Philosopher "+id+" is eating.");
-            eaten++;
             // delay
             try {
                 Thread.sleep(DELAY_MS);
@@ -80,38 +66,25 @@ public class Philosophers {
             }
         }
 
+        private void terminate(){
+            RUNNING = false;
+        }
+
         public void run( ) {
             while(RUNNING) {
                 think();
                 waiting();
                 //Pick up forks
-                try {
-                    leftFork.grab();
-                    rightFork.grab();
-                    eat();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                synchronized (leftFork){
+                    System.out.println("Philosopher "+id+" picked up left Fork");
+                    synchronized (rightFork){
+                        System.out.println("Philosopher "+id+" picked up right Fork");
+                        eat();
+                    }
                 }
-                // put down forks
-                leftFork.release();
-                rightFork.release();
             }
         }
     }
 }
 
-class Fork {
-    Thread philosopher = null;
 
-    public synchronized void grab() throws InterruptedException {
-        while (philosopher != null)
-            wait();
-        philosopher = Thread.currentThread();
-    }
-
-    public synchronized void release() {
-        if (philosopher == Thread.currentThread())
-            philosopher = null;
-        notify();
-    }
-}
