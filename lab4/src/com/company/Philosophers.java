@@ -2,7 +2,6 @@ package com.company;
 
 public class Philosophers {
     private static int NUM_PHIL = 8;
-    private static int DELAY_MS = 500;
     private static Fork[] forks = new Fork[NUM_PHIL];
 
     public static void main(String[] args) throws InterruptedException {
@@ -51,7 +50,7 @@ public class Philosophers {
             eaten++;
             // delay
             try {
-                Thread.sleep(DELAY_MS);
+                Thread.sleep(1000);
             }
             catch (InterruptedException e) {
                 e.printStackTrace();
@@ -62,7 +61,7 @@ public class Philosophers {
             System.out.println("Philosopher "+id+" is thinking.");
             // delay
             try {
-                Thread.sleep(DELAY_MS);
+                Thread.sleep(500);
             }
             catch (InterruptedException e) {
                 e.printStackTrace();
@@ -73,7 +72,7 @@ public class Philosophers {
             System.out.println("Philosopher "+id+" is waiting.");
             // delay
             try {
-                Thread.sleep(DELAY_MS);
+                Thread.sleep(200);
             }
             catch (InterruptedException e) {
                 e.printStackTrace();
