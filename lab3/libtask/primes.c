@@ -20,7 +20,7 @@ primetask(void *arg)
 	if(p > goal)
 		taskexitall(0);
 	if(!quiet)
-		printf("%d\n", p);
+		printf("%d\n", p, i);
 	nc = chancreate(sizeof(unsigned long), buffer);
 	taskcreate(primetask, nc, 32768);
 	for(;;){
@@ -41,7 +41,6 @@ taskmain(int argc, char **argv)
 	else
 		goal = 100;
 	printf("goal=%d\n", goal);
-
 	c = chancreate(sizeof(unsigned long), buffer);
 	taskcreate(primetask, c, 32768);
 	for(i=2;; i++)

@@ -30,8 +30,8 @@ CFLAGS=-Wall -c -I. -ggdb
 $(LIB): $(OFILES)
 	ar rvc $(LIB) $(OFILES)
 
-primes: primes.o $(LIB)
-	$(CC) -o primes primes.o $(LIB)
+test: test.o $(LIB)
+	$(CC) -o test test.o $(LIB)
 
 tcpproxy: tcpproxy.o $(LIB)
 	$(CC) -o tcpproxy tcpproxy.o $(LIB) $(TCPLIBS)
@@ -46,7 +46,7 @@ testdelay1: testdelay1.o $(LIB)
 	$(CC) -o testdelay1 testdelay1.o $(LIB)
 
 clean:
-	rm -f *.o primes tcpproxy testdelay testdelay1 httpload $(LIB)
+	rm -f *.o test tcpproxy testdelay testdelay1 httpload $(LIB)
 
 install: $(LIB)
 	cp $(LIB) /usr/local/lib
