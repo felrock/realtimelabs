@@ -12,6 +12,7 @@ OFILES=\
 	qlock.o\
 	rendez.o\
 	task.o\
+	test.o\
 
 all: $(LIB)
 
@@ -19,7 +20,7 @@ $(OFILES): taskimpl.h task.h 386-ucontext.h power-ucontext.h
 
 AS=gcc -c
 CC=gcc
-CFLAGS=-Wall -c -I. -ggdb
+CFLAGS= -Wall -c -I. -ggdb
 
 %.o: %.S
 	$(AS) $*.S
@@ -31,7 +32,7 @@ $(LIB): $(OFILES)
 	ar rvc $(LIB) $(OFILES)
 
 test: test.o $(LIB)
-	$(CC) -o test test.o $(LIB)
+	$(CC) -o test test.o $(LIB) $(CFLAGS)
 
 tcpproxy: tcpproxy.o $(LIB)
 	$(CC) -o tcpproxy tcpproxy.o $(LIB) $(TCPLIBS)
